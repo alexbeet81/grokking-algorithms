@@ -1,22 +1,32 @@
-graph = {}
-graph["alex"] = ["david", "jj", "podge", "james"]
-graph["david"] = ["Sally", "Aaron", "bob"]
-graph["jj"] = ["Burt"]
-graph["podge"] = ["Albert", "Thom"]
-graph["james"] = []
-graph["burt"] = []
+GRAPH = {}
+GRAPH["alex"] = ["david", "jj", "podge", "james"]
+GRAPH["david"] = ["Sally", "Aaron","jj", "bob"]
+GRAPH["jj"] = ["Burt"]
+GRAPH["podge"] = ["Albert", "thom", "jason"]
+GRAPH["james"] = ["Mamm"]
+GRAPH["burt"] = []
 
-search_queue = []
-search_queue += graph["alex"]
 
-while !search_queue.nil?
-  person = search_queue.shift
-  if person[-1] == "m"
-    puts "#{person} is a mango seller!"
-    return true
-  else
-    search_queue += graph[person] unless graph[person].nil?
+def breadth_first_search
+  search_queue = []
+  search_queue += GRAPH["alex"]
+  searched = []
+  until search_queue.nil?
+    p searched
+    person = search_queue.shift
+    unless searched.any?(person)
+      if person[-1] == "m"
+        puts "#{person} is a mango seller!"
+        return true
+      else
+        search_queue += GRAPH[person] unless GRAPH[person].nil?
+        searched << person
+      end
+    end
   end
+
+  puts "no mango seller...."
+  false
 end
 
-return false
+p breadth_first_search()
